@@ -1,8 +1,10 @@
 FROM alpine:edge
 
-RUN echo "http://dl-cdn.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories
+RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.aliyun.com/g' /etc/apk/repositories
 RUN apk update
-RUN apk add --no-cache xvfb x11vnc fluxbox supervisor xterm bash chromium firefox xrdp wqy-zenhei novnc websockify
+RUN apk add --no-cache xvfb x11vnc fluxbox supervisor xterm bash chromium sudo xrdp wqy-zenhei novnc websockify
+RUN rm -rf /var/cache/apk/*
+RUN mkfontscale && mkfontdir && fc-cache  && fc-list
 
 RUN ln -s /usr/share/novnc/vnc_lite.html /usr/share/novnc/index.html
 
